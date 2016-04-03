@@ -35,19 +35,33 @@ html, body {
 }
 
 #table-products {
-    border-collapse: collapse;
     border: 1px solid #000;
     width: 80%;
     margin: auto;
 }
-
-#table-products tr > th {
-    height: 30px;
+#table-products div {
+    display: inline-block;
+}
+#table-products .edit-item {
+    height: 100%;
+    /*background: yello;*/
+    width: 50%;
+    margin: 0 5px 0 5px;
 }
 
-#table-products td > input {
-    text-align: center;
-    padding-left: 5px;
+#table-products .edit-item .one-row {
+    vertical-align: top;
+    margin: 5px;
+    width: 240px;
+}
+.one-row p {
+    text-align: right;
+    margin: 0 5px 0 5px;
+}
+
+.one-row input {
+    width: 150px;
+
 }
 
 .width--30 {
@@ -90,10 +104,6 @@ html, body {
 
 .edit-item:nth-child(even) {
     background: gainsboro;
-}
-.add-item td {
-    padding: 5px;
-    vertical-align: middle;
 }
 
 .add-item input[type=text] {

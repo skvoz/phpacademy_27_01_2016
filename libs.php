@@ -75,3 +75,10 @@ function filterPrice()
         return $prices;
     }
 }
+
+function isSelected($var1, $var2)
+{
+    if ($var1 == $var2) {
+        return 'selected';
+    }
+}

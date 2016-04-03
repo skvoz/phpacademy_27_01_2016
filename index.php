@@ -19,7 +19,7 @@ $items = $db->getItems($db->link);
 <head>
     <meta charset="UTF-8">
     <title>Products table</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
     <nav id="nav">
@@ -28,34 +28,35 @@ $items = $db->getItems($db->link);
         </ul>
 
     </nav>
-    <table id="table-products">
+    <div id="table-products">
     <?php $userCanAdd = canAdd(); ?>
-
-        <tr class="add-item <?=$userCanAdd; ?>">
+<!--    ** ADD ITEM-->
+        <div class="add-item <?=$userCanAdd; ?>">
             <form method="POST" action="<?= $_SERVER['PHP_SELF']?>" >
-                <td>Add new item</td>
-                <td><input type="text" name="name" value=""></td>
-                <td>
+                <div>Add new item</div>
+                <div><input type="text" name="name" value=""></div>
+                <div>
                             <textarea type="text" name="description" cols="40" rows="2" ></textarea>
-                </td>
-                <td><input type="text" name="price" value="" ></td>
-                <td><input type="text" name="image"  value="" ></td>
-                <td <?=classAdd($userCanAdd); ?>><input type="text" name="is_active" value="" ></td>
-                <td><input type="text" name="vendor"  value="" ></td>
-                <td></td>
-                <td><input type="submit" value="save" name="action" ></td>
+                </div>
+                <div><input type="text" name="price" value="" ></div>
+                <div><input type="text" name="image"  value="" ></div>
+                <div <?=classAdd($userCanAdd); ?>><input type="text" name="is_active" value="" ></div>
+                <div><input type="text" name="vendor"  value="" ></div>
+                <div></div>
+                <div><input type="submit" value="save" name="action" ></div>
             </form>
-        </tr>
-        <tr>
+        </div>
+        <div>
             <th>ID</th><th>Name</th><th>Description</th><th>Price</th><th>Image</th>
             <th <?=classAdd($userCanAdd); ?>>IS Active</th><th>vendor</th><th>Edit Date</th><th>saving</th>
-        </tr>
-        <tr>
+        </div>
+<!--    ** CHOOSE FILTER-->
+        <div>
             <form method="GET" action="<?= $_SERVER['PHP_SELF']?>" >
-                <td></td>
-                <td></td>
-                <td></td>
-                <td colspan="2">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div colspan="2">
                     <label>Price range: </label>
                     <?=$db->getPriceRange(); ?><br>
                     <label>Price order: </label>
@@ -64,36 +65,43 @@ $items = $db->getItems($db->link);
                         <option value="ASC">Asc</option>
                         <option value="DESC">Desc</option>
                     </select>
-                </td>
-                <td <?=classAdd($userCanAdd); ?>></td>
-                <td><?=$db->getVendors(); ?></td>
-                <td></td>
-                <td><input type="submit" value="filter" name="filter" ></td>
+                </div>
+                <div <?=classAdd($userCanAdd); ?>></div>
+                <div><?=$db->getVendors(); ?></div>
+                <div></div>
+                <div><input type="submit" value="filter" name="filter" ></div>
             </form>
-        </tr>
+        </div>
+<!--    ** GET ITEMS -->
     <?php foreach ($items as $item) : ?>
         <?php $editable = canEdit(); ?>
-        <tr class="edit-item">
+        <div class="edit-item">
             <form method="POST" action="<?= $_SERVER['PHP_SELF']?>" >
-                    <td><input class="width--30" type="text" name="id" <?=$editable;?> value="<?= $item['id']?>" ></td>
-                    <td><input type="text" name="name" <?=$editable;?> value="<?= $item['name']?>" ></td>
-                    <td>
-                        <textarea type="text" name="description" cols="40" rows="3"<?=$editable;?> ><?=
-                            $item['description']?></textarea>
-                    </td>
-                    <td><input type="text" name="price" <?=$editable;?> value="<?= $item['price']?>" ></td>
-                    <td><input type="text" name="image" <?=$editable;?> value="<?= $item['image']?>" ></td>
-                    <td <?=classAdd($userCanAdd);?>>
-                        <input type="text" name="is_active" <?=$editable;?> value="<?= $item['is_active']?>" >
-                    </td>
-                    <td><input type="text" name="vendor" <?=$editable;?> value="<?= $item['vendor']?>" ></td>
-                    <td><input type="text" name="edit_date" <?=$editable;?> disabled value="<?= $item['edit_date']?>"></td>
-                    <td><input type="submit" value="save" name="action" <?=$editable;?> ></td>
+                <div class="one-row">
+                    <p>ID: <input type="text" name="id" <?=$editable;?> value="<?= $item['id']?>" ></p>
+                    <p>Item: <input type="text" name="name" <?=$editable;?> value="<?= $item['name']?>" ></p>
+                    <p>Vendor: <input type="text" name="vendor" <?=$editable;?> value="<?= $item['vendor']?>" ></p>
+                    <p>Price: <input type="text" name="price" <?=$editable;?> value="<?= $item['price']?>"></p>
+                    <p>Is Active:
+                        <select <?=$editable;?> name="is_active" >
+                            <option <?=isSelected($item['is_active'], 1)?> value="1">Enabled</option>
+                            <option <?=isSelected($item['is_active'], 0)?> value="0">Disabled</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="one-row">
+                    <p>Date: <input type="text" name="edit_date" <?=$editable;?> disabled value="<?= $item['edit_date']?>"></p>
+                        <span>Describe:</span>
+                        <textarea type="text" name="description" cols="35" rows="3"<?=$editable;?> ><?= $item['description']?></textarea>
+
+                </div>
+                <p>Image path: <input type="text" name="image" <?=$editable;?> value="<?= $item['image']?>" > </p>
+                <div <?=classAdd($userCanAdd);?>>
+                    <input type="submit" value="save" name="action" <?=$editable;?> >
+                </div>
             </form>
-        </tr>
+        </div>
     <?php endforeach; ?>
-    </table>
-    <form method="POST" action="<?= $_SERVER['PHP_SELF']?>" >
-        </form>
+    </div>
 </body>
 </html>
