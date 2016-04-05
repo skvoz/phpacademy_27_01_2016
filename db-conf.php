@@ -8,6 +8,7 @@ class Db
     const DB_NAME = 'php_class01';
 
     public $link;
+    private $image;
 
     public function __construct()
     {
@@ -42,9 +43,12 @@ class Db
         } else {
             $role = '';
         }
-        if ($vendor = filterVendors()) {
-            $vendor = " vendor='$vendor'";
-            $where[] = $vendor;
+        if ($vendors = filterVendors()) {
+            foreach ($vendors as $vendor) {
+                if ($vendor != '') {
+                    $whereIN[] = "'$vendor'";
+                }
+            }
         } else {
             $vendor = '';
         }
@@ -60,15 +64,18 @@ class Db
             }
         }
 
-        if (isset($where) > 0) {
+        if (isset($where) or isset($whereIN)) {
             $sql .= " WHERE ";
-            $sql .= implode(' AND ', $where);
+            if (isset($whereIN)  > 0 && $whereIN[0] != '') {
+                $where[] = 'vendor IN ('.implode(', ', $whereIN).')';
+            }
+            $sql .= (sizeof($where) > 0 ) ? implode(' AND ', $where) : '';
         }
         if ($price_order = getPriceOrder()) {
             $sql .= " ORDER BY price $price_order";
         }
 
-    //    var_dump($sql);
+//        var_dump($sql);  // SHOW SQL QUERY
         $res = mysqli_query($this->link, $sql);
         $items = [];
         while ($row = mysqli_fetch_assoc($res)) {
@@ -83,7 +90,6 @@ class Db
             $name = mysqli_real_escape_string($this->link, $_POST['name']);
             $desc = mysqli_real_escape_string($this->link, $_POST['description']);
             $price = mysqli_real_escape_string($this->link, $_POST['price']);
-            $image = mysqli_real_escape_string($this->link, $_POST['image']);
             $is_active = mysqli_real_escape_string($this->link, $_POST['is_active']);
             $vendor = mysqli_real_escape_string($this->link, $_POST['vendor']);
             $edit_date = date('Y-m-d H:i:s');
@@ -93,11 +99,11 @@ class Db
                 $data = "`name`='$name',
                 description='$desc',
                 price='$price',
-                image='$image',
+                image='$this->image',
                 is_active='$is_active',
                 vendor='$vendor',
                 edit_date='$edit_date'";
-                if (checkId($this->link, $id) && $_SESSION['role'] == 'admin') {
+                if ($this->checkId($id) && $_SESSION['role'] == 'admin') {
                     $sql = "UPDATE products SET ".$data." WHERE id=$id";
                 } elseif ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'user') {
                     $id = (isset($id)) ? "id=$id, " : '';
@@ -106,6 +112,37 @@ class Db
                 mysqli_query($this->link, $sql);
             }
         }
+    }
+
+    public function saveImg()
+    {
+        if (isset($_FILES["image"]["error"]) && $_FILES["image"]["error"] == 0) {
+            $targetPath = './assets/item-images';
+
+            if (!is_dir($targetPath)) {
+                mkdir($targetPath);
+            }
+
+            $imageFileType = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+            $targetFile = $targetPath . '/' . rand(10,99).date('siHdmy.') . $imageFileType;
+            $filePath = $_FILES["image"]["tmp_name"];
+            $type = strpos('jpg|jpeg|bmp|gif|png', strtolower($imageFileType));
+            // Check if image file is a actual image or fake image
+            if ($type !== false && !empty($filePath)) {
+                $check = getimagesize($filePath);
+            } else {
+                return "Load a file please...";
+            }
+            if ($check !== false) {
+                //echo "File is an image - " . $check["mime"] . ".";
+                if (move_uploaded_file($filePath, $targetFile)) {
+                    $this->image = $targetFile;
+                    //'uploaded seccesfully;
+
+                }
+            }
+        }
+
     }
 
     public function checkId($id)
@@ -151,12 +188,12 @@ class Db
         $res = mysqli_query($this->link, $sql);
         $vendors = mysqli_fetch_all($res);
 
-        $out = '<select name="vendor">'
+        $out = '<select name="vendors[]" multiple>'
             .     "<option value=\"\">All</option>";
         foreach ($vendors as $vendor) {
 
-            if (isset($_GET['vendor']) &&
-                $_GET['vendor'] == $vendor[0]) {
+            if (isset($_GET['vendors']) &&
+                $_GET['vendors'] == $vendor[0]) {
                 $selected = 'selected';
             } else {
                 $selected = '';

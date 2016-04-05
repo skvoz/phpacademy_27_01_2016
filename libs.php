@@ -58,9 +58,11 @@ function getPriceOrder()
 }
 function filterVendors()
 {
-    if (isset($_GET['filter']) && isset($_GET['vendor'])) {
-        $vendor = strip_tags($_GET['vendor']);
-        return $vendor;
+    if (isset($_GET['filter']) && isset($_GET['vendors'])) {
+        foreach($_GET['vendors'] as $vendor) {
+            $cleanVendors[] = strip_tags($vendor);
+        }
+        return $cleanVendors;
     }
 }
 
