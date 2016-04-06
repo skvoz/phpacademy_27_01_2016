@@ -1,0 +1,107 @@
+body, a, div, p,
+form, input, textarea,
+table, tr, th, td, button {
+    margin: 0px;
+    padding: 0px;
+}
+table {
+    border: 1px solid lightcoral;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+}
+
+tr{
+    width: 100%;
+}
+
+input{
+    width: 100%;
+    padding: 0px 0px;
+    border: 0px none;
+    background-color: transparent;
+}
+
+input, textarea {
+    font-size: 13px;
+    font-family: Tahoma, "Courier New", "Times New Roman";
+}
+form, table, th, td {
+    border: 1px solid lightcoral;
+
+}
+td {
+    vertical-align: top;
+
+}
+
+th, td {
+    padding: 3px;
+
+}
+
+textarea {
+    height: 60px;
+    width: 100%;
+    padding: 0px 0px;
+    border: 0px none;
+    resize: none;
+    background-color: transparent;
+
+}
+
+#id input, #is_active input {
+    text-align: center;
+}
+#id{
+    width: 30px;
+}
+#is_active{
+    width: 30px;
+}
+#vendor{
+    width: 10%;
+}
+#name{
+    width: 15%;
+}
+#price{
+    width: 80px;
+}
+#image{
+    width: 60px;
+}
+#description{
+    width: 45%;
+}
+#edit{
+    width: 80px;
+    background-color: #cccccc;
+    padding: 0px;
+    margin: 0px;
+}
+#edit :hover{
+    background-color: #ffff99;
+}
+tr:hover td, tr:hover #edit{
+    background-color: #ffff99;
+}
+
+#edit input {
+    background-color: transparent;
+    height: 66px;
+    padding: 0px;
+    margin: 0px;
+}
+
+#login {
+    width: 400px;
+    background-color: #cccccc;
+    margin: 50px auto 0px;
+    padding: 10px;
+}
+
+#login input {
+    border: 1px solid gray;
+}
+
