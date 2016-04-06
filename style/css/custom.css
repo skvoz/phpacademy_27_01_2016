@@ -1,0 +1,128 @@
+body{
+    background-image: url("../img/footer_lodyas.png");
+    font-family: 'Open Sans', sans-serif;
+    color: #3c3c3c;
+}
+.container{
+    background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+
+}
+#filter{
+    margin: 0px;
+    border-right: 1px dotted crimson;
+}
+
+/* Cначала обозначаем стили для IE8 и более старых версий
+т.е. здесь мы немного облагораживаем стандартный чекбокс. */
+.filter_row input[type="checkbox"] {
+    vertical-align: top;
+    margin: 0 3px 0 0;
+    width: 17px;
+    height: 17px;
+}
+/* Это для всех браузеров, кроме совсем старых, которые не поддерживают
+селекторы с плюсом. Показываем, что label кликабелен. */
+.filter_row input[type="checkbox"] + label {
+    cursor: pointer;
+}
+
+/* Далее идет оформление чекбокса в современных браузерах, а также IE9 и выше.
+Благодаря тому, что старые браузеры не поддерживают селекторы :not и :checked,
+в них все нижеследующие стили не сработают. */
+
+/* Прячем оригинальный чекбокс. */
+.filter_row input[type="checkbox"]:not(checked) {
+    position: absolute;
+    opacity: 0;
+}
+.filter_row input[type="checkbox"] + label {
+    position: relative; /* будем позиционировать псевдочекбокс относительно label */
+    padding: 0 0 0 60px; /* оставляем слева от label место под псевдочекбокс */
+}
+/* Оформление первой части чекбокса в выключенном состоянии (фон). */
+.filter_row input[type="checkbox"] + label:before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 31px;
+    height: 19px;
+    border-radius: 2px;
+    background: #CDD1DA;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,.2);
+}
+/* Оформление второй части чекбокса в выключенном состоянии (переключатель). */
+.filter_row input[type="checkbox"] + label:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 9px;
+    height: 14px;
+    border-radius: 1px;
+    background: #FFF;
+    box-shadow: 0 2px 5px rgba(0,0,0,.3);
+    transition: all .2s; /* анимация, чтобы чекбокс переключался плавно */
+}
+/* Меняем фон чекбокса, когда он включен. */
+.filter_row input[type="checkbox"]:checked + label:before {
+    background: #B43D38;
+}
+/* Сдвигаем переключатель чекбокса, когда он включен. */
+.filter_row input[type="checkbox"]:checked + label:after {
+    left: 19px;
+}
+/* Показываем получение фокуса. */
+.filter_row input[type="checkbox"]:focus + label:before {
+    box-shadow: 0 0 0 3px rgba(0,150,0,0.3);
+}
+#filters .filter_block {
+
+    text-align: left;
+}
+p.logined{
+    padding: 8px 0px;
+}
+span.logined{
+    padding: 10px 30px;
+    background: rgba(50, 69, 50, 0.69) none repeat scroll 0% 0%;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+}
+.myBtn{
+    border-radius: 0px;
+    padding: 7px 30px;
+    margin: 0px;
+    font-weight: 600;
+}
+input, select, textarea {
+    margin-bottom: 8px;
+}
+
+h4 {
+    border-bottom: 1px solid crimson !important;
+    font-size: 18px;
+}
+
+img {
+    height: 70px !important;
+    float: none;
+}
+.userBlock{
+    height: 500px !important;
+    margin-bottom: 10px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s;
+}
+.userBlock:hover{
+    position: absolute;
+    overflow: visible;
+    z-index: 9;
+    box-shadow: 0px 0px 10px;
+    height: auto !important;
+    background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    padding: 10px;
+    width: 100%;
+    transition: all 0.3s;
+}
