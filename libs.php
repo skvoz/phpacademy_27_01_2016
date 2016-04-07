@@ -9,13 +9,6 @@ function filter($data, $type = 's') {
     }
 }
 
-function isAuthorized() {
-    if (isset($_SESSION['auth']) && $_SESSION['auth'] === 'ok') {
-        return true;
-    }
-    return false;
-}
-
 
 function canEdit()
 {
@@ -45,8 +38,6 @@ function classAdd($className)
     }
     return '';
 }
-
-
 
 function getPriceOrder()
 {

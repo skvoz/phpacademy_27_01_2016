@@ -35,15 +35,18 @@ html, body {
 }
 
 .big-text {
-    vertical-align: middle;
+    /*display: block;*/
+    vertical-align: top;
     font: 1.2em Arial, sans-serif;
-    margin: 5px;
+    font-weight: bold;
+    /*margin: 2px 2px 2px 2px;*/
+    width: 150px;
 }
 
 #table-products {
     /*border: 1px solid #000;*/
     width: 80%;
-    min-width: 1000px;
+    min-width: 940px;
     border-radius: 10px;
     margin: auto;
     box-shadow: 2px 3px 4px black;
@@ -52,7 +55,7 @@ html, body {
     display: inline-block;
 }
 #table-products .edit-item {
-    min-height: 140px;
+    min-height: 100px;
     /*background: yello;*/
     width: 100%;
     /*margin: 0 5px 0 5px;*/
@@ -63,14 +66,28 @@ html, body {
     margin: 5px;
     width: 230px;
 }
+
+.one-row-1 {
+    margin: 5px 0 5px 0;
+    width: 160px;
+    text-align: right;
+    padding: 0;
+
+}
+.one-row-1 p {
+    margin: 2px 0;
+}
+
+
+.one-row-1 input {
+    width: 90px;
+}
+
 .one-row p {
     text-align: right;
     margin: 0 5px 0 5px;
 }
 
-.one-row {
-    width:33%;
-}
 .one-row input {
     width: 150px;
 }
@@ -89,6 +106,7 @@ html, body {
     margin: 0 15px;
 }
 .last-row {
+    margin-left: 5px;
     font: 0.8em Arial, sans-serif;
 }
 
@@ -112,7 +130,6 @@ html, body {
 }
 
 
-
 .add-item, .edit-item {
     /*border: 1px solid #000;*/
     /*height: 60px;*/
@@ -125,9 +142,6 @@ html, body {
     background: yellow;
 }
 
-#table-products  tr td > th {
-    width: 5%;
-}
 
 .edit-item {
     /*background: rgba(0,200,200, 0.2);*/

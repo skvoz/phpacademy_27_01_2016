@@ -1,29 +1,26 @@
 <?php
-session_start();
+require_once __DIR__ . '/autoload.php';
 
-require_once __DIR__ . '/libs.php';
-
-if (isAuthorized() === true) {
+if (Auth::isAuthorized() === true) {
     header('LOCATION: ./index.php');
 }
 
 if (isset($_POST['go'])) {
     if (isset($_POST['login']) && isset($_POST['pass'])) {
 
-        require_once __DIR__ . '/db-conf.php';
-        $db = New Db;
+        Db::connect();
 
-        $login = mysqli_real_escape_string($db->link, $_POST['login']);
-        $pass = mysqli_real_escape_string($db->link, $_POST['pass']);
+        $login = Db::escape_string($_POST['login']);
+        $pass = Db::escape_string($_POST['pass']);
         $pass = md5($pass . md5('solt'));
 
         $sql = "SELECT id, user, pass FROM users WHERE user='$login'";
-        $wasInBase = ($res = mysqli_query($db->link, $sql)) ? mysqli_fetch_assoc($res) : false ;
+        $wasInBase = ($res = Db::query($sql)) ? mysqli_fetch_assoc($res) : false ;
         if ($wasInBase == false) {
             $user_id = $db->createUser($login, $pass);
-            $db->login($user_id);
+            Auth::login($user_id);
         } elseif (isset($wasInBase['pass']) && $wasInBase['pass'] == $pass) {
-            $db->login($wasInBase['id']);
+            Auth::login($wasInBase['id']);
         } else {
             $message = 'Неправильный пароль или пользователь с таким логином уже существует.';
         }

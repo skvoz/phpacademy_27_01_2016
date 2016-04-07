@@ -1,17 +1,17 @@
 <?php
-session_start();
+require_once __DIR__ . '/autoload.php';
 
-require_once __DIR__ . '/db-conf.php';
-require_once __DIR__ . '/libs.php';
-
-if (isAuthorized() !== true) {
+if (Auth::isAuthorized() !== true) {
     header('LOCATION: ./registration.php');
 }
 
-$db = New Db;
-$db->saveImg();
-$update = $db->updateProducts($db->link);
-$items = $db->getItems($db->link);
+Db::connect();
+$users = New Users();
+$items = New Items();
+$items->saveImg();
+$items->updateItems();
+$items->getItems();
+$filter = New ItemsFilter();
 ?>
 
 <!doctype html>
@@ -33,8 +33,8 @@ $items = $db->getItems($db->link);
 <!--    ** ADD ITEM-->
         <div class="edit-item add-item <?=$userCanAdd; ?>">
             <form method="POST" action="<?= $_SERVER['PHP_SELF']?>" enctype="multipart/form-data">
-                <div >
-                    <span class="big-text">Add new item:</span>
+                <div class="one-row-1">
+                    <h2>Add new item:</h2>
                 </div>
                 <div class="one-row">
                     <p>Item: <input type="text" name="name" value=""></p>
@@ -43,10 +43,10 @@ $items = $db->getItems($db->link);
                 </div>
                 <div class="one-row">
                     <span>Describe:</span>
-                    <textarea type="text" name="description" cols="31" rows="3" ></textarea>
+                    <textarea type="text" name="description" cols="27" rows="3" ></textarea>
                 </div>
                 <div class="last-row">
-                    <p>Upload image: <input type="file" name="image"></p>
+                    <p>Upload image:<br> <input type="file" name="image"></p>
                     <p>Is Active:
                         <select <?=classAdd($userCanAdd); ?> name="is_active" >
                             <option value="1">Enabled</option>
@@ -63,12 +63,9 @@ $items = $db->getItems($db->link);
 <!--    ** CHOOSE FILTER-->
         <div class="add-item items-filter">
             <form method="GET" action="<?= $_SERVER['PHP_SELF']?>" >
-                <div></div>
-                <div></div>
-                <div></div>
-                <div colspan="2">
+                <div><h3>Filter:</h3>
                     <label>Price range: </label>
-                    <?=$db->getPriceRange(); ?><br>
+                    <?=$filter->getPriceRange(); ?><br>
                     <label>Price order: </label>
                     <select id="praice-order" name="price_order">
                         <option value="">not selected</option>
@@ -77,17 +74,17 @@ $items = $db->getItems($db->link);
                     </select>
                 </div>
                 <div <?=classAdd($userCanAdd); ?>></div>
-                <div>Vendors: <?=$db->getVendors(); ?></div>
+                <div>Vendors: <?=$filter->getVendors(); ?></div>
                 <div></div>
                 <div><input type="submit" value="filter" name="filter" ></div>
             </form>
         </div>
 <!--    ** GET ITEMS -->
-    <?php foreach ($items as $item) : ?>
+    <?php foreach ($items->selected as $item) : ?>
         <?php $editable = canEdit(); ?>
         <div class="edit-item">
             <form method="POST" action="<?= $_SERVER['PHP_SELF']?>" enctype="multipart/form-data">
-                <div class="one-row">
+                <div class="one-row-1">
                     <p>ID: <input type="text" name="id" <?=$editable;?> value="<?= $item['id']?>" ></p>
                     <p>Item: <input type="text" name="name" <?=$editable;?> value="<?= $item['name']?>" ></p>
                     <p>Vendor: <input type="text" name="vendor" <?=$editable;?> value="<?= $item['vendor']?>" ></p>
@@ -95,7 +92,7 @@ $items = $db->getItems($db->link);
                 </div>
                 <div class="one-row">
                     <span>Describe:</span>
-                    <textarea type="text" name="description" cols="31" rows="3"<?=$editable;?> ><?= $item['description']?></textarea>
+                    <textarea type="text" name="description" cols="27" rows="3"<?=$editable;?> ><?= $item['description']?></textarea>
                     <p>Is Active:
                         <select <?=$editable;?> name="is_active" >
                             <option <?=isSelected($item['is_active'], 1)?> value="1">Enabled</option>
@@ -110,7 +107,7 @@ $items = $db->getItems($db->link);
                     <p>Image path: <br><span><?= $item['image']?></span></p>
                     <p>change image: <input type="file" name="image"></p>
                     <p>
-                        Date: <input class="table-date" type="text" name="edit_date" <?=$editable;?> value="<?= $item['edit_date']?>">
+                        Date: <input class="table-date" type="text" name="edit_date" disabled value="<?= $item['edit_date']?>">
                         <input <?=classAdd($userCanAdd);?> type="submit" value="save changes" name="action" <?=$editable;?> >
                     </p>
                 </div>
