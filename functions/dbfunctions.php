@@ -1,8 +1,16 @@
 <?php
 
 function db_start(){
-    return mysqli_connect(DBHOST, DBUSER, DBPASS, DBBASE);
+    $link = mysqli_connect(DBHOST, DBUSER, DBPASS, DBBASE);
+    if (!$link){
+        die('unable to connect to database');
+    }
+    return $link;
 }
+//
+//function db_check_connection(){
+//
+//}
 
 function db_fetch($sql){
     $link = db_start();
