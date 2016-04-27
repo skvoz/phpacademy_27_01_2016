@@ -5,7 +5,17 @@ require __DIR__ . "/vendor/autoload.php";
 include __DIR__ . "/src/views/index.php";
 
 /** @var PDO $db */
-$db = new PDO();
+
+
+$user = 'root';
+
+$password = 'root';
+
+$driver = 'mysql:host=localhost;dbname=scotchbox;';
+
+$db = new PDO($driver, $user, $password);
+
+$sql = 'select * from user limit 10';
 
 $result = $db->query($sql);
 
