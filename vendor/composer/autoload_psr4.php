@@ -7,5 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'testnamespace\\' => array($baseDir . '/src'),
-    'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
 );

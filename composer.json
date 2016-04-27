@@ -3,8 +3,5 @@
     "psr-4": {
       "testnamespace\\": "src/"
     }
-  },
-  "require": {
-    "fzaninotto/faker": "^1.5"
   }
 }

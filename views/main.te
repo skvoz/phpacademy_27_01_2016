@@ -1,6 +1,0 @@
-<html>
-<body style="border: 1px solid red">
-<?=$foo?>
-<?=$bar?>
-</body>
-</html>
