@@ -1,6 +1,31 @@
-<html>
-<body style="border: 1px solid red">
-<?=$foo?>
-<?=$bar?>
-</body>
-</html>
+<?php
+use testnamespace\models\UsersModel;
+?>
+<form method="post" name="form" action="index.php">
+    <input type="text" name="user_name" value=""/>
+    <input type="submit" value="save" name="save"/>
+</form>
+<?php
+echo "memory (byte): ", memory_get_peak_usage(true), "\n";
+
+if (isset($users)) :
+
+    ?>
+    <table>
+        <?php foreach (UsersModel::generator($users) as $item) :?>
+            <tr>
+                <?php var_dump($item['user_name'])?>
+<!--                <td>--><?//=@$item['user_name']?><!--</td>-->
+<!--                <td>--><?//=@$item['description']?><!--</td>-->
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php else:?>
+    Юзеров нет
+<?php endif;?>
+
+
+<?php
+
+echo "memory (byte): ", memory_get_peak_usage(true), "\n";
+?>
