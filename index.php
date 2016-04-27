@@ -2,7 +2,7 @@
 
 require __DIR__ . "/vendor/autoload.php";
 
-include __DIR__ . "/src/views/index.php";
+
 
 /** @var PDO $db */
 
@@ -19,7 +19,9 @@ $sql = 'select * from user limit 10';
 
 $result = $db->query($sql);
 
-var_dump($result->fetchAll());
+$data = $result->fetchAll();
+
+include __DIR__ . "/src/views/index.php";
 
 
 ?>

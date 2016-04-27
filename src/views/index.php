@@ -3,4 +3,15 @@
     <input type="text" name="user_name" value=""/>
     <input type="submit" name="save" value="save"/>
 </form>
-Нету юзеров
+<table border="1" cellpadding="1" cellspacing="1">
+    <tr>
+        <td>username</td>
+        <td>description</td>
+    </tr>
+<?php
+
+foreach ($data as $item) {
+    echo sprintf('<tr><td>%s</td><td>%s</td></tr>', $item['user_name'], substr($item['description'], 0, 50));
+}
+?>
+</table>
