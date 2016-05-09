@@ -2,10 +2,7 @@
 
 require __DIR__ . "/vendor/autoload.php";
 
-
-
 /** @var PDO $db */
-
 
 $user = 'root';
 
@@ -31,31 +28,7 @@ if (isset($_REQUEST['save'])) {
     header('location: /index.php');
 }
 
-
-include __DIR__ . "/src/views/index.php";
-
-?>
-
-<?php
-/**
- * @param $tpl
- * @param $arrayEnv
- * @return mixed
- */
-//function render($tpl, $arr)
-//{
-//    $templatePath = sprintf('views/%s.te', $tpl);
-//    ob_start();
-//    extract($arr);
-//    include_once $templatePath;
-//    $res = ob_get_contents();
-//    ob_end_clean();
-//    return $res;
-//}
-//
-//
-//var_dump($_SERVER['REQUEST_URI']);
-//echo render('main', [
-//    'foo' => $foo,
-//    'bar' => $bar
-//]);
+echo View::render('index', [
+    'data' => $data
+]);
+//include __DIR__ . "/src/views/index.php";
