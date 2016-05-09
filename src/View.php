@@ -2,6 +2,7 @@
 
 
 namespace testnamespace;
+use Exception;
 
 /**
  * Class View
@@ -23,12 +24,16 @@ class View
      * @param $tpl
      * @param $arr
      * @return mixed
+     * @throws Exception
      */
     public static function render($tpl, $arr)
     {
         $templatePath = sprintf('src/views/%s.php', $tpl);
         ob_start();
         extract($arr);
+        if (!is_file($templatePath)) {
+            throw new Exception ('Error', 404);
+        }
         include_once $templatePath;
         $res = ob_get_contents();
         ob_end_clean();
