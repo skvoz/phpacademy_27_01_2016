@@ -11,9 +11,6 @@ class SiteController
 {
     public function actionIndex()
     {
-        echo 'we in controller';
-        die;
-
         $user = 'root';
 
         $password = 'root';
@@ -38,7 +35,7 @@ class SiteController
             header('location: /index.php');
         }
 
-        echo View::render('sdfasdf', [
+        echo View::render('index', [
             'data' => $data
         ]);
     }
