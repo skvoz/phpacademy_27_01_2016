@@ -1,5 +1,7 @@
 <?php
 
+use testnamespace\View;
+
 require __DIR__ . "/vendor/autoload.php";
 
 /** @var PDO $db */
