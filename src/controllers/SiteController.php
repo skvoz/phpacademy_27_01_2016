@@ -5,6 +5,7 @@ namespace testnamespace\controllers;
 
 
 use PDO;
+use testnamespace\Url;
 use testnamespace\View;
 
 class SiteController
@@ -32,7 +33,7 @@ class SiteController
                 $name, $description );
 
             $db->query($sql2);
-            header('location: /index.php');
+            header('location: ' . Url::to(['/site/index']));
         }
 
         echo View::render('index', [

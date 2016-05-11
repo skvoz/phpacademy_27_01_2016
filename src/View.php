@@ -28,15 +28,19 @@ class View
      */
     public static function render($tpl, $arr)
     {
-        $templatePath = sprintf('src/views/%s.php', $tpl);
+        $templatePath = sprintf(__DIR__ . '/views/%s.php', $tpl);
+
         ob_start();
         extract($arr);
         if (!is_file($templatePath)) {
             throw new Exception ('Error', 404);
         }
+        
         include_once $templatePath;
+
         $res = ob_get_contents();
         ob_end_clean();
+
         return $res;
     }
 }

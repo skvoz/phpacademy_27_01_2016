@@ -1,5 +1,9 @@
+<?php
+use testnamespace\Url;
 
-<form method="post" action="index.php">
+?>
+
+<form method="post" action="<?=Url::to(['/site/index'])?>">
     <input type="text" name="user_name" value=""/>
     <input type="text" name="description" value=""/>
     <input type="submit" name="save" value="save"/>
