@@ -36,7 +36,7 @@ class SiteController
             header('location: ' . Url::to(['/site/index']));
         }
 
-        echo View::render('index', [
+        echo View::render('site/index', [
             'data' => $data
         ]);
     }

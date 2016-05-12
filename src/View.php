@@ -1,6 +1,4 @@
 <?php
-
-
 namespace testnamespace;
 use Exception;
 
@@ -26,8 +24,10 @@ class View
      * @return mixed
      * @throws Exception
      */
-    public static function render($tpl, $arr)
+    public static function render($tpl, $arr, $useLayout = true, $layout = 'default')
     {
+        
+
         $templatePath = sprintf(__DIR__ . '/views/%s.php', $tpl);
 
         ob_start();
@@ -38,9 +38,22 @@ class View
         
         include_once $templatePath;
 
-        $res = ob_get_contents();
+        $content = ob_get_contents();
         ob_end_clean();
 
-        return $res;
+        if ($useLayout != false) {
+            if (!is_file(self::getLayoutPath($layout))){
+                throw new Exception ('Layout Error', 404.4);
+            }
+            ob_start();
+            include_once self::getLayoutPath($layout);
+            $content = ob_get_clean();
+        }
+        return $content;
+    }
+
+    public static function getLayoutPath($layout = 'default') 
+    {
+        return __DIR__.'/views/_layouts/'.$layout.'.php';
     }
 }

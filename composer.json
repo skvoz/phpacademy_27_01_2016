@@ -1,7 +1,12 @@
 {
   "autoload": {
     "psr-4": {
-      "testnamespace\\": "src/"
+      "testnamespace\\": "src/",
+      "vendor\\": "vendor/",
     }
-  }
+  },
+  "require": {
+    "php-activerecord/php-activerecord": "v1.1.2"
+	}
 }
+

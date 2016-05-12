@@ -19,9 +19,8 @@ class Routing implements IRouting
 
     public function __construct()
     {
-        $config = include_once __DIR__ . '/config/config.php';
-
-        $this->_routing = $config['routingMap'];
+        $this->_routing = Config::get('routingMap');
+        print_r($this->_routing);
     }
 
     function delegate($url)
