@@ -17,7 +17,7 @@ class View
     {
         $uri = isset($uri) ? $uri : '/';
 
-        header('location: ' . $uri);
+        header('location: ' . REL_URL.'/'.$uri);
     }
 
     /**

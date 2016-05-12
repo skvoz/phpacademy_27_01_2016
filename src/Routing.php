@@ -27,25 +27,20 @@ class Routing implements IRouting
     function delegate($url)
     {
         $args = [];
+        
+        $url = str_ireplace(REL_URL, '', $url);
 
         if ($currUrl = $this->matchRule($url)) {
             $url = $currUrl;
         }
-        $urlArray = explode('/', $url);
+        $urlArray = explode('/',  ltrim($url, '/'));
         //magic drop first el , such as first el == ''
-        array_shift($urlArray);
+        
+        $controller = array_shift($urlArray);
 
-        $controller = $urlArray[0];
+        $action = array_shift($urlArray);
 
-        $action = $urlArray[1];
-
-        if (count($urlArray) > 2) {
-            foreach ($urlArray as $order => $item) {
-                if ($order >=2) {
-                    $args[] = $item;
-                }
-            }
-        }
+        $args = $urlArray;
 
         $reflection = new ReflectionClass('testnamespace\\controllers\\' . ucfirst($controller) . 'Controller');
 

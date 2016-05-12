@@ -14,7 +14,7 @@ class SiteController
     {
         $user = 'root';
 
-        $password = 'root';
+        $password = '';
 
         $driver = 'mysql:host=localhost;dbname=scotchbox;';
 
