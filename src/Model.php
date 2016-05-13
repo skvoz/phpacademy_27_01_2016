@@ -1,6 +1,8 @@
 <?php
 
-namespace testnamespace\Model;
+namespace testnamespace;
+
+use \ActiveRecord;
 
 class Model extends ActiveRecord\Model
 {

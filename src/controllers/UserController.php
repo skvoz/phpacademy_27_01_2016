@@ -11,7 +11,7 @@ class UserController
     public function actionIndex()
     {   
 
-        $data = User::find('all');
+        $dataObj = User::find('all');
 
         if (isset($_REQUEST['save'])) {
             $name = $_REQUEST['user_name'];
@@ -24,9 +24,8 @@ class UserController
 
             header('location: ' . Url::to(['/user/index']));
         }
-
         echo View::render('user/index', [
-            'data' => $data
+            'dataObj' => $dataObj
         ]);
     }
 }

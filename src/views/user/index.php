@@ -15,8 +15,8 @@ use testnamespace\Url;
     </tr>
 <?php
 
-foreach ($data as $item) {
-    echo sprintf('<tr><td>%s</td><td>%s</td></tr>', $item['user_name'], substr($item['description'], 0, 50));
+foreach ($dataObj as $item) {
+    echo sprintf('<tr><td>%s</td><td>%s</td></tr>', $item->user_name, substr($item->description, 0, 50));
 }
 ?>
 </table>
