@@ -24,6 +24,10 @@ class Routing implements IRouting
         $this->_routing = $config['routingMap'];
     }
 
+    /**
+     * @param $url
+     * @throws \Exception
+     */
     function delegate($url)
     {
         $args = [];
@@ -60,6 +64,11 @@ class Routing implements IRouting
             throw new \Exception('Uncnown action . ' . $action);
         }
     }
+
+    /**
+     * @param $url
+     * @return bool
+     */
     private function matchRule($url)
     {
         if ($this->_routing) {
@@ -70,38 +79,5 @@ class Routing implements IRouting
             }
         }
         return false;
-
-//        var_dump($url);
-//        die;
-
-//        $uri = $request->getURI();
-//        $uri = $url;
-//        if (self::isAdminUri($uri)) {
-//            Controller::setAdminLayout();
-//        }
-//        // перебор элементов массива из routes.php
-//        foreach (self::$map as $route) {
-//            $regex = $route->pattern;
-//            foreach ($route->params as $k => $v) {
-//                $regex = str_replace('{' . $k . '}', '(' . $v . ')', $regex);
-//                // echo "$regex <br>";
-//            }
-//            // если нашли совпадение по регулярному выражению
-//            if (preg_match('@^' . $regex . '$@', $uri, $matches)) {
-//                array_shift($matches);
-//                if ($matches) {
-//                    $matches = array_combine(array_keys($route->params), $matches);
-//                    $request->mergeGet($matches);
-//                }
-//                self::$controller = 'Controller\\' . $route->controller . 'Controller';
-//                self::$action = $route->action . 'Action';
-//                break;
-//            }
-//        }
-//        if (is_null(self::$controller) || is_null(self::$action)) {
-//            throw new \Exception('Route not found: ' . $uri, 404);
-//        }
     }
-
-
 }

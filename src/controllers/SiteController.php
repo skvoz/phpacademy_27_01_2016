@@ -3,40 +3,29 @@
 
 namespace testnamespace\controllers;
 
-
-use PDO;
-use testnamespace\Url;
-use testnamespace\View;
+use testnamespace\Application;
+use testnamespace\models\UserModel;
 
 class SiteController
 {
     public function actionIndex()
     {
-        $user = 'root';
+        $userModel = new UserModel();
 
-        $password = 'root';
+        $data = $userModel->find();
 
-        $driver = 'mysql:host=localhost;dbname=scotchbox;';
-
-        $db = new PDO($driver, $user, $password);
-
-        $sql = 'select * from user ORDER BY ID DESC limit 10 ';
-
-        $result = $db->query($sql);
-
-        $data = $result->fetchAll();
-
-        if (isset($_REQUEST['save'])) {
-            $name = $_REQUEST['user_name'];
-            $description = $_REQUEST['description'];
-            $sql2 = sprintf('insert into `user` (user_name, description) VALUES ("%s","%s")',
-                $name, $description );
-
-            $db->query($sql2);
-            header('location: ' . Url::to(['/site/index']));
+        if (Application::response()->request('save')) {
+            $name = Application::response()->request('user_name');
+            $description = Application::response()->request('description');
+            
+            $userModel->user_name = $name;
+            $userModel->description = $description;
+            $userModel->save();
+            
+            Application::view()->redirect(['/site/index']);
         }
 
-        echo View::render('index', [
+        echo Application::view()->render('index', [
             'data' => $data
         ]);
     }

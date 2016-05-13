@@ -11,12 +11,12 @@ use Exception;
 class View
 {
     /**
-     * @param null $uri
+     * @param array $uri
      */
-    public static function redirect($uri = null)
+    public  function redirect($uri = null)
     {
         $uri = isset($uri) ? $uri : '/';
-
+        $uri = Url::to($uri);
         header('location: ' . $uri);
     }
 
@@ -26,16 +26,17 @@ class View
      * @return mixed
      * @throws Exception
      */
-    public static function render($tpl, $arr)
+    public  function render($tpl, $arr)
     {
         $templatePath = sprintf(__DIR__ . '/views/%s.php', $tpl);
+        $layoutPath = sprintf(__DIR__ . '/views/layout.php', $tpl);
 
         ob_start();
         extract($arr);
         if (!is_file($templatePath)) {
             throw new Exception ('Error', 404);
         }
-        
+
         include_once $templatePath;
 
         $res = ob_get_contents();
