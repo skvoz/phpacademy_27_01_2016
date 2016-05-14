@@ -2,8 +2,8 @@
 use testnamespace\Url;
 
 ?>
-
-<form method="post" action="<?=Url::to(['/site/index'])?>">
+<h2>User</h2>
+<form method="post" action="<?=Url::to(['/user/index'])?>">
     <input type="text" name="user_name" value=""/>
     <input type="text" name="description" value=""/>
     <input type="submit" name="save" value="save"/>

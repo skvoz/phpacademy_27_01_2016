@@ -1,8 +1,7 @@
 <?php
-
-
 namespace testnamespace;
 
+use testnamespace\Config;
 
 class Url
 {
@@ -10,9 +9,7 @@ class Url
 
     public static function getRouting()
     {
-        $config = include __DIR__ . '/config/config.php';
-     
-        return $config['routingMap'];
+        return Config::get('routingMap');
     }
 
 //    public function __construct()
@@ -28,7 +25,9 @@ class Url
     public static function to($param)
     {
         if ($url = self::matchRule($param[0])) {
-            
+
+        } else {
+            $url = implode('/', $param);
         }
         
         return REL_URL.$url;

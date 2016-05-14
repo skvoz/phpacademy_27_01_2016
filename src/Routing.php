@@ -1,11 +1,9 @@
 <?php
-
-
 namespace testnamespace;
 
 use ReflectionClass;
 use testnamespace\ourInterface\IRouting;
-
+use testnamespace\controllers\UserController;
 /**
  * Class Routing
  * @package testnamespace
@@ -20,7 +18,6 @@ class Routing implements IRouting
     public function __construct()
     {
         $this->_routing = Config::get('routingMap');
-        print_r($this->_routing);
     }
 
     function delegate($url)
