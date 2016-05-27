@@ -7,6 +7,9 @@ return [
         'user' => 'root',
         'password' => 'root',
     ],
+    'secure' => [
+        'controller' => ['admin']
+    ],
 //    'components' => [
 //        'request' => [
 //            'class' => Request::class,

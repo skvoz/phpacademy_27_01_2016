@@ -1,7 +1,7 @@
 <?php
 
 
-namespace testnamespace\views;
+namespace testnamespace;
 
 
 class Response

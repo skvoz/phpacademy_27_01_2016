@@ -15,22 +15,28 @@ class View
      */
     public  function redirect($uri = null)
     {
+        //todo
+        $newUri = '';
+        foreach ($uri as $order => $item) {
+            $newUri .= '/' . $item;
+        }
+        $uri = substr($newUri, 1, strlen($newUri));
         $uri = isset($uri) ? $uri : '/';
-        $uri = Url::to($uri);
+
         header('location: ' . $uri);
     }
 
     /**
      * @param $tpl
      * @param $arr
+     * @param string $controller
      * @return mixed
      * @throws Exception
      */
-    public  function render($tpl, $arr)
+    public  function render($tpl, $arr, $controller = 'site')
     {
-        $templatePath = sprintf(__DIR__ . '/views/%s.php', $tpl);
-        $layoutPath = sprintf(__DIR__ . '/views/layout.php', $tpl);
-
+        $templatePath = sprintf(__DIR__ . '/views/%s/%s.php', $controller, $tpl);
+        
         ob_start();
         extract($arr);
         if (!is_file($templatePath)) {

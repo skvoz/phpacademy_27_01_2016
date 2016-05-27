@@ -1,7 +1,9 @@
 <?php
 
+use testnamespace\Routing;
+
 require __DIR__ . "/vendor/autoload.php";
 
-$routing = new \testnamespace\Routing();
+$routing = new Routing();
 
 $routing->delegate($_SERVER['REQUEST_URI']);

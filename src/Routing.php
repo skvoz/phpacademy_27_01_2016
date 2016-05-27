@@ -36,12 +36,19 @@ class Routing implements IRouting
             $url = $currUrl;
         }
         $urlArray = explode('/', $url);
+
         //magic drop first el , such as first el == ''
         array_shift($urlArray);
+//        var_dump($urlArray[0]);
+//        die;
+        if (!isset($urlArray[0]) || $urlArray[0] == '') {
+            $controller = 'site';
+            $action = 'index';
+        } else {
+            $controller = $urlArray[0];
 
-        $controller = $urlArray[0];
-
-        $action = $urlArray[1];
+            $action = $urlArray[1];
+        }
 
         if (count($urlArray) > 2) {
             foreach ($urlArray as $order => $item) {
@@ -58,7 +65,6 @@ class Routing implements IRouting
         $action = 'action' . ucfirst($action);
 
         if (is_callable([$controller, $action])) {
-
             call_user_func_array([$controller, $action], $args);
         } else {
             throw new \Exception('Uncnown action . ' . $action);

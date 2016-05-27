@@ -29,4 +29,12 @@ class SiteController
             'data' => $data
         ]);
     }
+    
+    public function actionError($error = null)
+    {
+            
+        echo Application::view()->render('error', [
+            'data' => $error
+        ]);
+    }
 }

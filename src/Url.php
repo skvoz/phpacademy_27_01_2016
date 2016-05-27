@@ -29,8 +29,10 @@ class Url
     {
         if ($url = self::matchRule($param[0])) {
             
+        } else {
+            $url = $param[0];
         }
-        
+       
         return $url;
     }
 

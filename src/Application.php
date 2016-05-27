@@ -3,7 +3,6 @@
 
 namespace testnamespace;
 
-use testnamespace\views\Response;
 
 class Application
 {
