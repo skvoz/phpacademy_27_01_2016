@@ -23,25 +23,37 @@ abstract class BaseModel
     {
         $result = [];
         if ($condition) {
-            //todo
+            $where = ' WHERE ';
+            foreach ($condition as $key => $item) {
+                $where .= sprintf("$key='$item' AND ");
+            }
+            $where = substr($where, 0, -5);
+
+            $sql = sprintf('select * from %s %s order by id', $this->table, $where);
         } else {
-            $sql = sprintf('select * from %s order by id DESC limit 100', $this->table);
-            $result = Application::db()->query($sql);
-            $result = $result->fetchAll(PDO::FETCH_ASSOC);
+            $sql = sprintf('select * from %s order by id', $this->table);
+
 //            return $data;
-//            foreach ($data as $item) {
-//                foreach ($item as $field => $value) {
-////                    if (is_callable([$this, $field])) {
-//                        $this->$field = $value;
-////                    } else {
-////                        var_dump($field, $value);
-////                        die;
-////                        throw new \Exception('Unexsit field');
-////                    }
-//                }
-//            }
+//
         }
 
+        $result = Application::db()->query($sql);
+        $result = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($result as $item) {
+                foreach ($item as $field => $value) {
+//                    if (is_callable([$this, $field])) {
+                        $this->$field = $value;
+//                    } else {
+//                        var_dump($field, $value);
+//                        die;
+//                        throw new \Exception('Unexsit field');
+//                    }
+                }
+            }
+
+//        var_dump($this);
+//        die;
 
         return $result;
     }

@@ -15,4 +15,6 @@ class UserModel extends BaseModel
     public $url_id;
     public $user_name;
     public $description;
+    public $login;
+    public $password;
 }

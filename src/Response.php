@@ -22,9 +22,9 @@ class Response
         return $result;
     }
 
-    public function request($key)
+    public function request($key = null)
     {
-        $result = isset($_REQUEST[$key]) ? $_REQUEST[$key] : false;
+        $result = isset($_REQUEST[$key]) ? $_REQUEST[$key] : $_REQUEST;
         
         return $result;
     }
